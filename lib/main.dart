@@ -1,6 +1,7 @@
-import 'package:deal_test/view/screens/splashscreen.dart';
+import 'package:deal_test/view/screens/registratontest.dart';
 import 'package:flutter/material.dart';
-void main(){
+
+void main() {
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -8,11 +9,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/':(context) => const SplashScreen(),
-      },
-      initialRoute: '/',
+    return const MaterialApp(
+      home: RegistrationSample(),
     );
   }
 }
