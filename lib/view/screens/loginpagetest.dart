@@ -13,36 +13,45 @@ class _LoginPageTestSampleState extends State<LoginPageTestSample> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Login ",style: TextStyle( color: Color(0xFF5529A4),
-            fontFamily:'Oswald-Bold') ,),
+        title: const Text("Sign In ",style: TextStyle( color: Colors.black54,
+            fontFamily:'Oswald',fontSize: 30) ,),
         backgroundColor:Colors.white ,
+        elevation: 0,
 
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 110.0),
-              child: Center(
-
-                child: Container(
-                    width: 200,
-                    height: 200,
-                    /*decoration: BoxDecoration(
-						color: Colors.red,
-						borderRadius: BorderRadius.circular(50.0)),*/
-                    child:Image.asset('assets/images/Login.jpeg')),
-                
-                
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 200,
+              height: 200,
+              child: Image.asset('assets/images/dealninga.jpeg',fit: BoxFit.fill,),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 0, right: 0, top: 100, bottom: 0),
+              child: Text(
+                'Welcome back',
+                style: TextStyle(
+                    fontFamily: 'Oswald', fontSize: 43, color: Colors.black54),
               ),
             ),
             const Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.only(left: 30, right: 20, top: 10, bottom: 0),
+              child: Text(
+                'sharing is now easier collecting everything now easier collect everything',
+                style: TextStyle(
+                    fontSize: 17, fontFamily: 'Oswald', color: Colors.black54),
+              ),
+            ),
+
+            const Padding(
+              padding:  EdgeInsets.only(left:15.0,right: 15.0,top:20,bottom: 0),
+            //  padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Phone number, email or username',
+                    labelText: 'Phone number or email',
                     hintText: 'Enter valid email id as abc@gmail.com'),
               ),
             ),

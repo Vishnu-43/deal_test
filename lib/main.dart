@@ -1,3 +1,4 @@
+import 'package:deal_test/view/screens/loginpagetest.dart';
 import 'package:deal_test/view/screens/registratontest.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: RegistrationSample(),
+      home: LoginPageTestSample(),
     );
   }
 }
