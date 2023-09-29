@@ -21,6 +21,7 @@ class _LoginPageTestSampleState extends State<LoginPageTestSample> {
       ),
       body: SingleChildScrollView(
         child: Column(
+
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
@@ -39,7 +40,7 @@ class _LoginPageTestSampleState extends State<LoginPageTestSample> {
             const Padding(
               padding: EdgeInsets.only(left: 30, right: 20, top: 10, bottom: 0),
               child: Text(
-                'sharing is now easier collecting everything now easier collect everything',
+                'Sharing is now easier collecting everything now easier collect everything',
                 style: TextStyle(
                     fontSize: 17, fontFamily: 'Oswald', color: Colors.black54),
               ),
@@ -106,7 +107,7 @@ class _LoginPageTestSampleState extends State<LoginPageTestSample> {
                             onTap: (){
                               print('hello');
                             },
-                            child: Text('Get help logging in.', style: TextStyle(fontSize: 14, color: Colors.blue),)),
+                            child: const Text('Get help logging in.', style: TextStyle(fontSize: 14, color: Colors.blue),)),
                       )
                     ],
                   ),
