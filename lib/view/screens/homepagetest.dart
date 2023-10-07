@@ -17,7 +17,6 @@ class _HomePageState extends State<HomePage> {
     DealScreen(),
     Screen2(),
     SettingPage(),
-    Screen3(),
   ];
 
   @override
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               title: Text('Starred'),
-              leading: Icon(Icons.star_border),
+              leading: Icon(Icons.star_border ),
             )
           ],
         ),
