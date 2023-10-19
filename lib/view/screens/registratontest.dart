@@ -1,171 +1,59 @@
-import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class RegistrationSample extends StatefulWidget {
-  const RegistrationSample({super.key});
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  @override
-  State<RegistrationSample> createState() => _RegistrationSampleState();
+String? name;
+String? email;
+String? imageUrl;
+
+Future<String> signInWithGoogle() async {
+  await Firebase.initializeApp();
+  final googleSignInAccount = await googleSignIn.signIn();
+  final GoogleSignInAuthentication googleSignInAuthentication =
+  await googleSignInAccount!.authentication;
+
+  final AuthCredential  credential = GoogleAuthProvider.credential(
+    accessToken: googleSignInAuthentication.accessToken,
+    idToken: googleSignInAuthentication.idToken,
+  );
+
+  final UserCredential authResult =
+  await _auth.signInWithCredential(credential);
+  final user = authResult.user;
+
+  if (user != null) {
+    // Checking if email and name is null
+    assert(user.email != null);
+    assert(user.displayName != null);
+    assert(user.photoURL != null);
+
+    name = user.displayName;
+    email = user.email;
+    imageUrl = user.photoURL;
+
+    if (name!.contains(" ")) {
+      name = name!;
+    }
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final User? currentUser = _auth!.currentUser;
+    assert(user.uid == currentUser!.uid);
+
+    print('signInWithGoogle succeeded: $user');
+
+    return '$user';
+  }
+
+  return '';
 }
 
-class _RegistrationSampleState extends State<RegistrationSample> {
-  final _emailController = TextEditingController();
-  // final _phoneController = TextEditingController();
-  // final _locationController = TextEditingController();
-  // final _pinController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final loginForm = GlobalKey<FormState>();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-            child: Text(
-          'Registration',
-          style: TextStyle(color: Colors.black54, fontFamily: 'Oswald'),
-        )),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              const Padding(
-                padding:
-                    EdgeInsets.only(left: 0, right: 0, top: 100, bottom: 0),
-                child: Text(
-                  'Create new account',
-                  style: TextStyle(
-                      fontFamily: 'Oswald',
-                      fontSize: 43,
-                      color: Colors.black54),
-                ),
-              ),
-              const Padding(
-                padding:
-                    EdgeInsets.only(left: 40, right: 20, top: 20, bottom: 0),
-                child: Text(
-                  'sharing is now easier collecting everything now easier collect everything',
-                  style: TextStyle(
-                      fontSize: 17,
-                      fontFamily: 'Oswald',
-                      color: Colors.black54),
-                ),
-              ),
-              Form(
-                  key: loginForm,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 40, right: 20, top: 25, bottom: 0),
-                        //padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your email';
-                            } else if (!value.contains('@gmail')) {
-                              return "Please enter a valid email";
-                            } else {
-                              return null;
-                            }
-                          },
-                          controller: _emailController,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Enter your email',
-                              hintText: 'Email ',
-                              prefixIcon: Icon(Icons.email)),
-                        ),
-                      ),
+Future<void> signOutGoogle() async {
+  await googleSignIn.signOut();
 
-
-                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: 40, right: 20, top: 25, bottom: 0),
-                        //padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: TextFormField(
-                          validator: (value){
-                            RegExp regex = RegExp(
-                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-                            if (value!.isEmpty){
-                              return 'Please enter your password';
-                            }
-                            else{
-                              if(!regex.hasMatch(value)){
-                                return 'enter valid password';
-                              }
-                              else{
-                                return null;
-                              }
-                            }
-
-                          },
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Enter your Password',
-                              hintText: 'Password ',
-                              prefixIcon: Icon(Icons.password_outlined)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 40, right: 20, top: 25, bottom: 0),
-                        //padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: TextFormField(
-                          validator: (value){
-                           if (value!.isEmpty){
-                             return "Empty";
-                           }
-                           if(value != _passwordController.text){
-                             return 'Not Match';
-                           }
-                           else{
-                             return null;
-                           }
-
-                          },
-
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Conform Password',
-                              hintText: 'Password',
-                              prefixIcon: Icon(Icons.password)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 65,
-                        width: 360,
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 20.0),
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Color(0xFF4A4A5F))),
-                              child: const Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                              ),
-                              onPressed: () {
-                                loginForm.currentState!.validate();
-                                print('Successfully sign up ');
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  print("User Signed Out");
 }
